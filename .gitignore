@@ -58,3 +58,6 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Jet Brains
+**/.idea/workspace.xml
+**/.idea/tasks.xml
