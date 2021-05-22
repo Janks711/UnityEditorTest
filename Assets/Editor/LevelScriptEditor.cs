@@ -18,5 +18,4 @@ public class LevelScriptEditor : Editor
             myLevelScript.ResetLevel();
         }
     }
-    
 }
