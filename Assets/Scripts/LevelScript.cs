@@ -13,11 +13,11 @@ public class LevelScript : MonoBehaviour
     }
     public int Level => experience / 750;
 
-    public void SetExperience(int experience)
+    private void SetExperience(int experienceToAdd)
     {
-        if (experience >= 0)
+        if (experienceToAdd >= 0)
         {
-            this.experience = experience;
+            experience = experienceToAdd;
         }
     }
 }
