@@ -9,8 +9,8 @@ public class LevelScriptEditor : Editor
     public override void OnInspectorGUI()
     {
         LevelScript myLevelScript = (LevelScript)target;
-
-        myLevelScript.Experience = EditorGUILayout.IntField("Experience", myLevelScript.Experience);
+        EditorGUILayout.HelpBox("This will help see the level of the character", MessageType.Info);
+        DrawDefaultInspector();
         EditorGUILayout.LabelField("Level", myLevelScript.Level.ToString());
     }
     
