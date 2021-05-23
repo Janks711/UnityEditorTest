@@ -63,4 +63,36 @@ public class MenuItems
         // Returns true if selected object is a texture, otherwise will be greyed out
         return Selection.activeObject is Texture2D;
     }
+
+    [MenuItem("OrderedMenu/Option1", false, 1)]
+    public static void Option1()
+    {
+        Debug.Log("You pressed option 1");
+    }
+
+    [MenuItem("OrderedMenu/Option2", false, 2)]
+    public static void Option2()
+    {
+        Debug.Log("You pressed option 2");
+    }
+
+    // Menus group by 50, so this creates a new group in the menu
+    [MenuItem("OrderedMenu/Option3", false, 51)]
+    public static void Option3()
+    {
+        Debug.Log("You pressed option 3");
+    }
+
+    [MenuItem("OrderedMenu/Option4", false, 52)]
+    public static void Option4()
+    {
+        Debug.Log("You pressed option 4");
+    }
+
+    // This creates a third group
+    [MenuItem("OrderedMenu/Option5", false, 101)]
+    public static void Option5()
+    {
+        Debug.Log("You pressed option 5");
+    }
 }
