@@ -7,6 +7,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [HideInInspector] public new Rigidbody rigidbody;
+    public float damageRadius = 1;
 
     // Reset is called when you add the component to the game object.
     // Reset is also called when you reset the game object in the editor
