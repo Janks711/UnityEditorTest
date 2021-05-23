@@ -39,7 +39,7 @@ public class LauncherEditor : Editor
     {
         var launcher = target as Launcher;
         var transform = launcher.transform;
-        launcher.offset = transform.InverseTransformDirection(
+        launcher.offset = transform.InverseTransformPoint(
             Handles.PositionHandle(
                 transform.TransformPoint(launcher.offset),
                 transform.rotation));
