@@ -142,8 +142,8 @@ public class SplineComponent : MonoBehaviour, ISpline
     }
 
     public int ControlPointCount => points.Count;
-    
-    private void ResetIndex()
+
+    public void ResetIndex()
     {
         uniformIndex = null;
         length = null;
