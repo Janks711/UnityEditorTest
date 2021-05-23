@@ -13,7 +13,7 @@ public class Launcher : MonoBehaviour
     {
         var body = Instantiate(
             projectile,
-            transform.TransformVector(offset),
+            transform.TransformPoint(offset),
             transform.rotation);
         body.velocity = Vector3.forward * velocity;
     }
