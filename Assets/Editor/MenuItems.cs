@@ -43,10 +43,24 @@ public class MenuItems
     }
 
     // Add a new component that is accessed by right-clicking the Level Script Component
-    
     [MenuItem("CONTEXT/LevelScript/Add Level Config")]
     public static void ResetLevel()
     {
         Debug.Log("Add level");
+    }
+    
+    // Adding a menu item with validation
+    [MenuItem("Assets/Process Texture")]
+    public static void DoSomethingWithTextures()
+    {
+        Debug.Log("You broke it");
+    }
+
+    // Note we pass the same path, but with an added true argument
+    [MenuItem("Assets/Process Texture", true)]
+    public static bool ProcessTextureMenuValidation()
+    {
+        // Returns true if selected object is a texture, otherwise will be greyed out
+        return Selection.activeObject is Texture2D;
     }
 }
