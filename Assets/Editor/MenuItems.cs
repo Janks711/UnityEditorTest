@@ -43,10 +43,20 @@ public class MenuItems
     }
 
     // Add a new component that is accessed by right-clicking the Level Script Component
-    [MenuItem("CONTEXT/LevelScript/Add Level Config")]
-    public static void ResetLevel()
+    // Using the menu command argument, can get the component that we are right clicking on to adjust it's data
+    [MenuItem("CONTEXT/LevelScript/Add Level")]
+    public static void ResetLevel(MenuCommand menuCommand)
     {
-        Debug.Log("Add level");
+        // By adding a context menu option this way you are extending a context menu for a given component
+        // Can use this to extend Unity default components as well
+
+        // My level script being extracted using the menu command context
+        var myLevelScript = menuCommand.context as LevelScript;
+        if (myLevelScript)
+        {
+            Debug.Log("Added 1 level");
+            myLevelScript.AddExperience(750);
+        }
     }
     
     // Adding a menu item with validation
