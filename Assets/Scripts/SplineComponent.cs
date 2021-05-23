@@ -182,6 +182,23 @@ public class SplineComponent : MonoBehaviour, ISpline
             );
     }
 
+    private void Reset()
+    {
+        points = new List<Vector3>()
+        {
+            Vector3.forward * 3,
+            Vector3.forward * 6,
+            Vector3.forward * 9,
+            Vector3.forward * 12
+        };
+    }
+
+    private void OnValidate()
+    {
+        if (uniformIndex != null) uniformIndex.ReIndex();
+    }
+
+
     public class SplineIndex
     {
         public Vector3[] linearPoints;
@@ -195,7 +212,7 @@ public class SplineComponent : MonoBehaviour, ISpline
             ReIndex();
         }
 
-        private void ReIndex()
+        public void ReIndex()
         {
             var searchStepSize = 0.00001f;
             var length = spline.GetLength(searchStepSize);
