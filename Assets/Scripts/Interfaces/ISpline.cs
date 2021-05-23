@@ -21,7 +21,7 @@ public interface ISpline
     Vector3 GetForward(float t);
     Vector3 GetBackward(float t);
 
-    float GetLenght(float stepSize);
+    float GetLength(float stepSize);
 
     Vector3 GetControlPoint(int index);
     void SetControlPoint(int index, Vector3 position);
