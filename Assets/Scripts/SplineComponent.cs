@@ -9,7 +9,17 @@ public class SplineComponent : MonoBehaviour, ISpline
     public bool closed = false;
     public List<Vector3> points = new List<Vector3>();
     public float? length;
-    
+
+    private SplineIndex uniformIndex;
+
+    SplineIndex Index
+    {
+        get
+        {
+            if (uniformIndex == null) uniformIndex = new SplineIndex(this);
+            return uniformIndex;
+        }
+    }
     
     public Vector3 GetNonUniformPoint(float t)
     {
@@ -29,44 +39,49 @@ public class SplineComponent : MonoBehaviour, ISpline
         }
     }
 
-    public Vector3 GetPoint(float t)
-    {
-        throw new System.NotImplementedException();
-    }
+    public Vector3 GetPoint(float t) => Index.GetPoint(t);
 
-    public Vector3 GetLeft(float t)
-    {
-        throw new System.NotImplementedException();
-    }
+    public Vector3 GetLeft(float t) => -GetRight(t);
 
     public Vector3 GetRight(float t)
     {
-        throw new System.NotImplementedException();
+        var A = GetPoint(t - 0.001f);
+        var B = GetPoint(t + 0.001f);
+        var delta = (B - A);
+        return new Vector3(-delta.z, 0, delta.x).normalized;
     }
 
     public Vector3 GetUp(float t)
     {
-        throw new System.NotImplementedException();
+        var A = GetPoint(t - 0.001f);
+        var B = GetPoint(t + 0.001f);
+        var delta = (B - A).normalized;
+        return Vector3.Cross(delta, GetRight(t));
     }
 
-    public Vector3 GetDown(float t)
-    {
-        throw new System.NotImplementedException();
-    }
-
+    public Vector3 GetDown(float t) => -GetUp(t);
     public Vector3 GetForward(float t)
     {
-        throw new System.NotImplementedException();
+        var A = GetPoint(t - 0.001f);
+        var B = GetPoint(t + 0.001f);
+        return (B - A).normalized;
     }
 
-    public Vector3 GetBackward(float t)
-    {
-        throw new System.NotImplementedException();
-    }
+    public Vector3 GetBackward(float t) => -GetForward(t);
 
-    public float GetLength(float stepSize)
+    public float GetLength(float stepSize = 0.001f)
     {
-        throw new System.NotImplementedException();
+        var D = 0f;
+        var A = GetNonUniformPoint(0);
+        for (var t = 0f; t < 1f; t += stepSize)
+        {
+            var B = GetNonUniformPoint(t);
+            var delta = (B - A);
+            D += delta.magnitude;
+            A = B;
+        }
+
+        return D;
     }
 
     public Vector3 GetControlPoint(int index)
@@ -103,19 +118,35 @@ public class SplineComponent : MonoBehaviour, ISpline
 
     public Vector3 GetDistance(float distance)
     {
-        throw new System.NotImplementedException();
-    }
+        length ??= GetLength();
+        return uniformIndex.GetPoint(distance / length.Value);
+    }   
 
     public Vector3 FindClosest(Vector3 worldPoint)
     {
-        throw new System.NotImplementedException();
+        var smallestDelta = float.MaxValue;
+        var step = 1f / 1024;
+        var closestPoint = Vector3.zero;
+        for (var i = 0; i <= 1024; i++)
+        {
+            var p = GetPoint(i * step);
+            var delta = (worldPoint - p).sqrMagnitude;
+            if (delta < smallestDelta)
+            {
+                closestPoint = p;
+                smallestDelta = delta;
+            }
+        }
+
+        return closestPoint;
     }
 
     public int ControlPointCount => points.Count;
     
     private void ResetIndex()
     {
-        throw new NotImplementedException();
+        uniformIndex = null;
+        length = null;
     }
 
     private Vector3 Hermite(float t)
